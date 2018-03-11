@@ -7,8 +7,8 @@
 
 #include <Blinker.h>
 
-char ssid[] = "mostfun";//"<Your WiFi network SSID or name>";
-char pswd[] = "18038083873";//"<Your WiFi network WPA password or WEP key>";
+char ssid[] = "<Your WiFi network SSID or name>";
+char pswd[] = "<Your WiFi network WPA password or WEP key>";
 
 // U8g2lib, https://github.com/olikraus/U8g2_Arduino
 #include <U8g2lib.h>
