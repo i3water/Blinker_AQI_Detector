@@ -32,26 +32,26 @@ uint32_t os_time_ms;
 
 void drawAQI()
 {
-	u8g2.setFont(u8g2_font_helvR10_te);
-	u8g2.setCursor(0, 13);
-	u8g2.print("PM1.0:" + String(pms.getPmAto(1.0)));
-	u8g2.setCursor(0, 27);
-	u8g2.print("PM2.5:" + String(pms.getPmAto(2.5)));
-	u8g2.setCursor(0, 41);
-	u8g2.print("PM10:" + String(pms.getPmAto(10)));
+    u8g2.setFont(u8g2_font_helvR10_te);
+    u8g2.setCursor(0, 13);
+    u8g2.print("PM1.0:" + String(pms.getPmAto(1.0)));
+    u8g2.setCursor(0, 27);
+    u8g2.print("PM2.5:" + String(pms.getPmAto(2.5)));
+    u8g2.setCursor(0, 41);
+    u8g2.print("PM10:" + String(pms.getPmAto(10)));
 
-	u8g2.setCursor(75, 13);
-	u8g2.print("FA:" + String(pms.getForm()));
-	u8g2.setCursor(75, 27);
-	u8g2.print("RH:" + String((int)pms.getHumi()) + "%");
-	u8g2.setCursor(75, 41);
-	u8g2.print("TP:" + String((int)pms.getTemp()) + "°");
+    u8g2.setCursor(75, 13);
+    u8g2.print("FA:" + String(pms.getForm()));
+    u8g2.setCursor(75, 27);
+    u8g2.print("RH:" + String((int)pms.getHumi()) + "%");
+    u8g2.setCursor(75, 41);
+    u8g2.print("TP:" + String((int)pms.getTemp()) + "°");
 
-	u8g2.drawLine(0, 46, 128, 46);
+    u8g2.drawLine(0, 46, 128, 46);
 
-	u8g2.setFont(u8g2_font_helvR10_te);
-	u8g2.setCursor(0, 63);
-	u8g2.print("Blinker AQI detector");
+    u8g2.setFont(u8g2_font_helvR10_te);
+    u8g2.setCursor(0, 63);
+    u8g2.print("Blinker AQI detector");
 }
 
 void getPMS()
@@ -77,59 +77,59 @@ void detectorDisplay()
 {
     getPMS();
 
-	u8g2.firstPage();
+    u8g2.firstPage();
     do {
-		drawAQI();
+        drawAQI();
     } while ( u8g2.nextPage() );
 }
 
 void u8g2Init()
 {
-	u8g2.begin();
-	u8g2.setFlipMode(0);
-	u8g2.clearBuffer();
-	u8g2.enableUTF8Print();
+    u8g2.begin();
+    u8g2.setFlipMode(0);
+    u8g2.clearBuffer();
+    u8g2.enableUTF8Print();
 }
 
 void pmsInit()
 {
-	pmsSerial.begin(9600);
+    pmsSerial.begin(9600);
     pms.begin(pmsSerial);
     pms.setMode(PASSIVE);
 }
 
 void setup()
 {
-	Serial.begin(115200);
+    Serial.begin(115200);
 
-	u8g2Init();
-	pmsInit();
+    u8g2Init();
+    pmsInit();
 
     Blinker.begin();
 }
 
 void loop()
 {
-	Blinker.run();
+    Blinker.run();
 
-	if (Blinker.available()) {
-		BLINKER_LOG2("Blinker.readString(): ", Blinker.readString());
+    if (Blinker.available()) {
+        BLINKER_LOG2("Blinker.readString(): ", Blinker.readString());
 
-		Blinker.vibrate();
-		
-		uint32_t BlinkerTime = millis();
-		Blinker.print(BlinkerTime);
-		Blinker.print("millis", BlinkerTime);
-	}
+        Blinker.vibrate();
+        
+        uint32_t BlinkerTime = millis();
+        Blinker.print(BlinkerTime);
+        Blinker.print("millis", BlinkerTime);
+    }
 
-	detectorDisplay();
+    detectorDisplay();
 
-	Blinker.print("PM1.0", pms.getPmAto(1.0), "ug/m3");
-	Blinker.print("PM2.5", pms.getPmAto(2.5), "ug/m3");
-	Blinker.print("PM10", pms.getPmAto(10), "ug/m3");
-	Blinker.print("FA", (int)pms.getForm(), "ug/m3");
-	Blinker.print("RH", (int)pms.getHumi(), "%");
-	Blinker.print("TP", (int)pms.getTemp(), "°C");
+    Blinker.print("PM1.0", pms.getPmAto(1.0), "ug/m3");
+    Blinker.print("PM2.5", pms.getPmAto(2.5), "ug/m3");
+    Blinker.print("PM10", pms.getPmAto(10), "ug/m3");
+    Blinker.print("FA", (int)pms.getForm(), "ug/m3");
+    Blinker.print("RH", (int)pms.getHumi(), "%");
+    Blinker.print("TP", (int)pms.getTemp(), "°C");
 
     Blinker.delay(1000);
 }
